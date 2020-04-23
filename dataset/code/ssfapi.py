@@ -432,15 +432,40 @@ for fileName in fileList:
 
 for fileName in newFileList:
     d = Document(fileName)
-    print(d.fileName)
+    # print(d.fileName)
     for tree in d.nodeList:
+        # for chunkNode in tree.nodeList:
+        #     for node in chunkNode.nodeList:
+        #         print(node.name, end=" ")
+        # print()
+        # print()
         for chunkNode in tree.nodeList:
-            for node in chunkNode.nodeList:
-                print(node.name, end=" ")
-        print()
-        print()
-        for chunkNode in tree.nodeList:
-            print(chunkNode.name, chunkNode.attributes, chunkNode.isParent, chunkNode.parent, chunkNode.parentRelation)
+            temp = list(chunkNode.attributes.values())
+            key = list(chunkNode.attributes.keys())
+            head = ""
+            ai = 0
+            srl = ""
+            pred = ""
+            for k in range(len(key)):
+                if key[k] == "head":
+                    head = temp[k]
+
+                elif key[k] == "pbrel":
+                    ai = 1
+                    srl = temp[k].split(':')[-2]
+                    pred = temp[k].split(':')[-1]
+
+            pt = temp[0].split(',')
+            if len(pt) > 6:
+                post = pt[6]
+                if post == " " or post == "":
+                    post = 0
+            else:
+                post = 0
+            print(head, chunkNode.name, post, chunkNode.parent, chunkNode.parentRelation, ai, srl, pred)
+            # for temp in chunkNode.attributes:
+            #     print(temp, 'key' ,chunkNode.attributes[temp])
+            
             for node in chunkNode.nodeList:
                 
                 refAddress = node.getAttribute('ref')
@@ -452,4 +477,4 @@ for fileName in newFileList:
                     print (tree.header + tree.text + tree.footer)
         
         print()
-        print()
+        # print()
