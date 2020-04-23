@@ -1,28 +1,28 @@
 import pandas as pd
-import prettytable as pt
-import numpy as np 
-from tabulate import tabulate
-import os
+import numpy as np
 
-files = [os.path.join(path, name) for path, subdirs, files in os.walk("dataset") for name in files]
+filepath=""
+dataset = pd.read_csv(filepath)
+vectors=dataset.drop('vectors',axis=1)
+target=dataset.['Labels']
 
-write_file = open("data.csv", "a")
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 
-for f in files:
-    table = pd.read_table(f, skiprows=0, names=['ID', 'FORM', 'LEMMA', 'CPOSTAG', 'POSTAG', 'FEATS', 'HEAD', 'DEPREL', 'PHEAD', 'PDEPREL'])
+from sklearn.svm import SVC
+svclassifier = SVC(kernel='linear')
+svclassifier.fit(X_train, y_train)
+
+from sklearn.metrics import classification_report, confusion_matrix
+
+print(confusion_matrix(y_test,y_pred))
+print(classification_report(y_test,y_pred))
 
 
-    # print(tabulate(table, headers=['ID','FORM','LEMMA','CPOSTAG','POSTAG','FEATS','HEAD','DEPREL','PHEAD','PDEPREL'], showindex=False))
-    # print(table["FORM"])
-    feature_array = table[['FEATS']].to_numpy()
-    np.savetxt('features.txt', feature_array, fmt="%s", delimiter='|', newline='\n', header='', footer='', comments='# ', encoding=None)
+from sklearn.externals import joblib
 
-    # print(feature_array)
-    features = pd.read_csv('features.txt', sep='|', skiprows=0, names=['cat', 'gen', 'num', 'pers', 'case', 'vib', 'tam', 'chunkId', 'chunkType' , 'stype' , 'voicetype'])
+joblib_file = "binary_model.pkl"
+joblib.dump(svclassifier, joblib_file)
 
-    final = pd.concat([table, features], axis = 1)
-    write_in = np.concatenate([table[['ID', 'FORM', 'LEMMA', 'HEAD', 'DEPREL']].to_numpy(), features.to_numpy()], axis=1)
-    print((write_in))
-    np.savetxt(write_file, write_in, fmt='%s')
-    # print(tabulate(final,  showindex=False))
-
+# Load from file
+# joblib_model = joblib.load(joblib_file)
