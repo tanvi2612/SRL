@@ -1,13 +1,13 @@
 import pandas as pd
 import numpy as np
 
-filepath=""
+filepath="./out.csv"
 dataset = pd.read_csv(filepath)
-vectors=dataset.drop('vectors',axis=1)
-target=dataset.['Labels']
+vectors=dataset.drop('Labels',axis=1)
+target=dataset['Labels']
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
+X_train, X_test, y_train, y_test = train_test_split(vectors, target, test_size = 0.30)
 
 from sklearn.svm import SVC
 svclassifier = SVC(kernel='linear')
