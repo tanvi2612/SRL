@@ -462,7 +462,14 @@ for fileName in newFileList:
                     post = 0
             else:
                 post = 0
-            print(head, chunkNode.name, post, chunkNode.parent, chunkNode.parentRelation, ai, srl, pred)
+            if head != 'NULL':
+                # print(temp)
+                if key[0] == "af":
+                    print(head, temp[0].split(',')[1])
+                else:
+                    if head != '':
+                        print(head, "NULL")
+            # print(head, chunkNode.name, post, chunkNode.parent, chunkNode.parentRelation, ai, srl, pred)
             # for temp in chunkNode.attributes:
             #     print(temp, 'key' ,chunkNode.attributes[temp])
             
@@ -476,5 +483,5 @@ for fileName in newFileList:
                     print (tree.printSSFValue())
                     print (tree.header + tree.text + tree.footer)
         
-        print()
+        # print()
         # print()
