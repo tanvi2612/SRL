@@ -1,4 +1,4 @@
 import os
 
-for i in range(11,16):
-    os.system("python3 b_3.py {}".format(i))
+for i in range(11,14):
+    os.system("python3 m_3.py {}".format(i))
