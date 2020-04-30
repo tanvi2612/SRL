@@ -36,8 +36,8 @@ for curr in temp:
     vals=vectors[dropped].values
     vectors[dropped]=LabelEncoder().fit_transform(vals)
 
-    targ = target['srl'].values
-    target['srl'] = LabelEncoder().fit_transform(targ)
+    targ = target.values
+    target = LabelEncoder().fit_transform(targ)
    
 
 

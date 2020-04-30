@@ -23,10 +23,10 @@ dropped_fields=['Label','chunk','srl','postposition','head-POS','dependency','de
 vectors=dataset.drop(dropped_fields,axis=1)
 target=dataset['srl']
 
-targ = target['srl'].values
-target['srl'] = LabelEncoder().fit_transform(targ)
+targ = target.values
+target = LabelEncoder().fit_transform(targ)
 
-X_train, X_test, y_train, y_test = train_test_split(vectors, target, test_size = 0.30,stratify=target)
+X_train, X_test, y_train, y_test = train_test_split(vectors, target, test_size = 0.30,random_state=42)
 
 svclassifier = SVC(kernel='linear')
 svclassifier.fit(X_train, y_train)

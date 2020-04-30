@@ -39,13 +39,13 @@ for X in range(1):
     vals2=vectors[dropped[1]].values
     vectors[dropped[1]]=LabelEncoder().fit_transform(vals2)
 
-    targ = target['srl'].values
-    target['srl'] = LabelEncoder().fit_transform(targ)
+    targ = target.values
+    target = LabelEncoder().fit_transform(targ)
 
 
     #Converts the strings to number representations     
     
-    X_train, X_test, y_train, y_test = train_test_split(vectors, target, test_size = 0.30,stratify=target)
+    X_train, X_test, y_train, y_test = train_test_split(vectors, target, test_size = 0.30,random_state=42)
 
     svclassifier = SVC(kernel='linear')
     svclassifier.fit(X_train, y_train)
